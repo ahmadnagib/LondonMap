@@ -83,13 +83,13 @@ var ViewModel = function() {
       var enteredText = that.filteringText();
       if (enteredText != null) {
         var placeTitle = placeObject.title.toLowerCase();
-        var match = (placeTitle.search(enteredText.toLowerCase()) != -1);
+        var match = (placeTitle.indexOf(enteredText.toLowerCase()) != -1);
         placeObject.inList(match);
       } else {
         placeObject.inList(true);
       }
     });
-  }, self);
+  }, that);
 
   var placesHtmlElement = $('#places-list')[0];
 
@@ -120,7 +120,7 @@ var ViewModel = function() {
     // initialize the content of infowindow
     var infoWindowContent = '<div class="info-window"><h4 id="marker-title">' +
     marker.title + '</h4><div id="panorama"></div>' +
-    '<ul id="wiki"><h4><a class="link" href="http://www.wikipedia.org">Wikipedia articles:</a></h4></ul></div>'
+    '<ul id="wiki"><h4><a class="link" href="http://www.wikipedia.org">Wikipedia articles:</a></h4></ul></div>';
 
     markerInfoWindow.setContent(infoWindowContent);
 
