@@ -5,7 +5,7 @@ The style to be used in creating a new Google Map
 Created on my own with the help of the great Google Map
 APIs styling wizard https://mapstyle.withgoogle.com/
 */
-const mapStyles = [
+var mapStyles = [
   {
     featureType: 'administrative',
     elementType: 'labels.text.fill',
@@ -181,7 +181,7 @@ var mapView = function () {
   Creates a new Google Map using the styling above
   The map type control is disabled
   */
-  const mapElement = $('#map')[0];
+  var mapElement = $('#map')[0];
 
   var mapCenter = new google.maps.LatLng(51.527751, -0.102482);
 
@@ -216,5 +216,5 @@ var mapView = function () {
 
   // activates the knockout bindings
   // and defines the view model object to be used
-  ko.applyBindings(new ViewModel())
+  ko.applyBindings(new ViewModel());
 };
