@@ -2,7 +2,7 @@
 
 LondonMap is a responsive web application that helps people discover places around [City, University of London](https://en.wikipedia.org/wiki/City,_University_of_London). A live version of the application can be found at [londonmap.tk](http://www.londonmap.tk)
 
-img
+![screenshot](https://user-images.githubusercontent.com/13169976/29096432-3beb4610-7c95-11e7-8382-fbf32ee4e546.png)
 
 This project is part of Udacity's Full Stack Web Developer Nanodegree Program. [Knockout JavaScript framework](http://www.knockoutjs.com) is used as an implementation of the Model-View-ViewModel pattern. [Google Maps APIs](https://developers.google.com/maps/) are used to get and view information about several places on map. Additionally, [Wikipedia API](https://www.mediawiki.org/wiki/API:Main_page) is used to get articles relevant to these places.
 
