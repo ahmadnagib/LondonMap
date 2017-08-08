@@ -4,7 +4,9 @@ LondonMap is a responsive web application that helps people discover places arou
 
 ![screenshot](https://user-images.githubusercontent.com/13169976/29096432-3beb4610-7c95-11e7-8382-fbf32ee4e546.png)
 
-This project is part of Udacity's Full Stack Web Developer Nanodegree Program. [Knockout JavaScript framework](http://www.knockoutjs.com) is used as an implementation of the Model-View-ViewModel pattern. [Google Maps APIs](https://developers.google.com/maps/) are used to get and view information about several places on map. Additionally, [Wikipedia API](https://www.mediawiki.org/wiki/API:Main_page) is used to get articles relevant to these places.
+This project is part of Udacity's Full Stack Web Developer Nanodegree Program. Part of the code was inspired from my own implementation of udacity lessons and quizzes.
+
+In [LondonMap](http://www.londonmap.tk), [Knockout JavaScript framework](http://www.knockoutjs.com) is used as an implementation of the Model-View-ViewModel pattern. [Google Maps APIs](https://developers.google.com/maps/) are used to get and view information about several places on map. Additionally, [Wikipedia API](https://www.mediawiki.org/wiki/API:Main_page) is used to get articles relevant to these places.
 
 # Documentation
 
@@ -40,7 +42,7 @@ Kindly report any device incompatibilities by sending [me](mailto:ahmadnagib@fci
 
 ## Create your own XMap
 
-+ The application can simply be switched to another neighbourhood by editing the places array found in the `model.js` file. The longitude and latitude of a certain place can be found with the help of the [Google Maps API Geocoder Tool](https://google-developers.appspot.com/maps/documentation/utils/geocoder/).
++ The application can simply be switched to another neighbourhood by editing the `places` array found in the `model.js` file. The longitude and latitude of a certain place can be found with the help of the [Google Maps API Geocoder Tool](https://google-developers.appspot.com/maps/documentation/utils/geocoder/).
 
 ```
 const places = [
@@ -303,16 +305,16 @@ var mapCenter = new google.maps.LatLng(51.527751, -0.102482);
 
 ```
 // Default map marker icon
-  // icon art from https://icons8.com/icon/12383/mind-map
-  defaultIcon = {
-    url: 'img/default.png'
-  };
+// icon art from https://icons8.com/icon/12383/mind-map
+defaultIcon = {
+  url: 'img/default.png'
+};
 
-  // Highlighted marker icon when mouse is over the marker
-  // icon art from https://icons8.com/icon/45604/map-pokemon
-  highlightedIcon = {
-    url: 'img/highlighted.png'
-  };
+// Highlighted marker icon when mouse is over the marker
+// icon art from https://icons8.com/icon/45604/map-pokemon
+highlightedIcon = {
+  url: 'img/highlighted.png'
+};
 ```
 
 + Additionally, you will probably have to replace the `src` in the `img` tag found in the `index.html` file. This will facilitate the customization of the Navigation Menu Icon.
@@ -338,7 +340,7 @@ LondonMap-master/
     ├── mapview.js
     ├── model.js
     ├── viewmodel.js
-├── styles/
+├── style/
     ├── main.css
 ├── index.html
 ├── LICENSE
