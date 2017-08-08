@@ -1,6 +1,6 @@
 // The initial places that will be presented on map and list view by default
 // lat and lng were got by the help of Google Maps API Geocoder Tool
-const places = [
+var places = [
   {
     title: 'City, University of London',
     location: {
