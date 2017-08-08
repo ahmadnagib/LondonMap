@@ -27,7 +27,7 @@ Kindly report any browser incompatibilities by sending [me](mailto:ahmadnagib@fc
 
 ## Tested Devices
 
-This web application was tested on Google Nexus 6p, Nexus 5, HUAWEI MediaPad M3, iPad, Samsung Galaxy S Duos 2 and Toshiba Satellite L855-B511.
+This web application was tested on Google Nexus 6p, Nexus 5, HUAWEI MediaPad M3, iPad and Toshiba Satellite L855-B511.
 
 Kindly report any device incompatibilities by sending [me](mailto:ahmadnagib@fci-cu.edu.eg) an email.
 
