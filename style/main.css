@@ -195,6 +195,12 @@ nav.open {
   transform: translate(0, 0);
 }
 
+@media (min-height: 450px) {
+  .col-6 {
+    overflow-y: scroll;
+  }
+}
+
 @media (min-width: 400px) {
   .col-6 {
     width: 41.66%;
