@@ -45,7 +45,7 @@ Kindly report any device incompatibilities by sending [me](mailto:ahmadnagib@fci
 + The application can simply be switched to another neighbourhood by editing the `places` array found in the `model.js` file. The longitude and latitude of a certain place can be found with the help of the [Google Maps API Geocoder Tool](https://google-developers.appspot.com/maps/documentation/utils/geocoder/).
 
 ```
-const places = [
+var places = [
   {
     title: 'City, University of London',
     location: {
@@ -120,10 +120,10 @@ const places = [
 ```
 
 
-+ Additionally, The style to be used in creating the Google Map can be changed by editing the `mapStyles` object found in the `mapview.js` file. The one already there was created on my own with the help of the great [Google Maps APIs Styling Wizard](https://mapstyle.withgoogle.com/).
++ Additionally, The style to be used in creating the Google Map can be changed by editing the `mapStyles` object found in the `mapstyles.js` file. The one already there was created on my own with the help of the great [Google Maps APIs Styling Wizard](https://mapstyle.withgoogle.com/).
 
 ```
-const mapStyles = [
+var mapStyles = [
   {
     featureType: 'administrative',
     elementType: 'labels.text.fill',
