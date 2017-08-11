@@ -15,16 +15,23 @@ var ViewModel = function() {
 
   // loops the places ko list
   ko.utils.arrayForEach(this.placesKoList(), function(placeObject) {
+
     // adds click event listener for each place marker
     placeObject.marker.addListener('click', function(){
-      // adds street view to the infowindow
-      addStreetView(placeObject.marker, markerInfoWindow);
 
-      // adds place-related wikipedia articles to the infowindow
-      addWikiArticles(placeObject.marker);
+      // gets content to be added to the infowindow
+      addInfoWindowContent(placeObject.marker);
 
       // opens the infowindow on markers location on map
       markerInfoWindow.open(map, placeObject.marker);
+
+      // set the center of the map to be the clicked marker's position
+      // inspired from udacity reviewer recommendation
+      map.panTo(placeObject.marker.getPosition());
+
+      // make sure that the infowindow is fully viewed on map after
+      // getting the marker to the center of the map
+      map.panBy(0, -100);
 
       // force the infowindow to close when the map is clicked
       map.addListener('click', function(){
@@ -55,7 +62,7 @@ var ViewModel = function() {
     // shows markers on map only for places that have
     // true value for inList ko observable
     placeObject.markersOnMap = ko.computed(function() {
-      return placeObject.inList() ? placeObject.marker.setMap(map) : placeObject.marker.setMap(null);
+      return placeObject.inList() ? placeObject.marker.setVisible(true) : placeObject.marker.setVisible(false);
     }, that);
 
     // trigger the same markers behaviour when the enduser interacts
@@ -91,16 +98,17 @@ var ViewModel = function() {
     });
   }, that);
 
-  var placesHtmlElement = $('#places-list')[0];
+  // places list will be not visible by default in mobile view
+  this.visiblePlacesList = ko.observable(false);
 
   // open the places list when the navigation icon is clicked in mobile view
   this.showPlacesList = function () {
-    placesHtmlElement.classList.toggle('open');
+    that.visiblePlacesList(!that.visiblePlacesList());
   };
 
   // remove the places list when the navigation icon is clicked in mobile view
   this.hidePlacesList = function () {
-    placesHtmlElement.classList.remove('open');
+    that.visiblePlacesList(false);
   };
 
   // changes marker animation to bounce if clicked
@@ -112,17 +120,13 @@ var ViewModel = function() {
 
   // adds street view to the infowindow
   // inspired from udacity lessons and quizzes
-  var addStreetView = function(marker, markerInfoWindow) {
+  var addStreetView = function(marker, markerInfoWindow, wikiContent) {
 
     // empty the infowindow to create a new one for another place marker
     toggleInfoWindow(marker, markerInfoWindow);
 
     // initialize the content of infowindow
-    var infoWindowContent = '<div class="info-window"><h4 id="marker-title">' +
-    marker.title + '</h4><div id="panorama"></div>' +
-    '<ul id="wiki"><h4><a class="link" href="http://www.wikipedia.org">Wikipedia articles:</a></h4></ul></div>';
-
-    markerInfoWindow.setContent(infoWindowContent);
+    var streetViewContent = '<div class="info-window"><h4 id="marker-title">' + marker.title + '</h4><div id="panorama">';
 
     // creates a StreetViewService object
     var streetViewService = new google.maps.StreetViewService();
@@ -132,7 +136,8 @@ var ViewModel = function() {
     var streetView = function(result, status) {
       if (status != google.maps.StreetViewStatus.OK) {
         // no streetview found
-        $('#panorama').text('No StreetView found!');
+        streetViewContent += 'No StreetView found!</div>';
+        markerInfoWindow.setContent(streetViewContent + wikiContent);
       } else {
         // success: a streetview was found near the marker's location
         var foundLocation = result.location.latLng;
@@ -150,10 +155,12 @@ var ViewModel = function() {
           position: foundLocation
         };
 
+        streetViewContent += '</div>';
+        markerInfoWindow.setContent(streetViewContent + wikiContent);
         // create the StreetViewPanorama object with the given options
         // and add it to the infowindow
         var panorama = new google.maps.StreetViewPanorama(
-          $('#panorama')[0], panoramaConfig);
+          document.getElementById('panorama'), panoramaConfig);
       }
     };
 
@@ -164,51 +171,44 @@ var ViewModel = function() {
 
   // adds place-related wikipedia articles to the infowindow
   // inspired from my own implementation of udacity lessons and quizzes
-  var addWikiArticles = function(marker) {
+  var addInfoWindowContent = function(marker) {
+    // empty the infowindow
+    markerInfoWindow.setContent('');
+
     // create the webservice url to search for wikipedia articles relevant to a place title
+    // Wikipedia API was used to fulfill this functionality
     var url = 'https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=' +
         marker.title +
         '&prop=info&inprop=url';
 
-    // set a timeout for getting a response from wikipedia api
-    // and handles the case if no response is received within 10 seconds
-    var wikiApiReqTimeout = setTimeout(function(){
-      $('#wiki').text('');
-      $('#wiki').append('<h4><a>Wikipedia articles about ' +
-        marker.title.toUpperCase() +
-        ' could not be loaded!</a></h4>');
-    }, 10000);
+    // string to carry infowindow content
+    var wikiContent = '<ul id="wiki"><h4>Wikipedia articles:<a class="link" href="https://www.mediawiki.org/wiki/API:Main_page">Powered by Wikipedia API</a></h4>';
 
-    // initiate an asynchronous wikipedia API request and
-    // gets response in json format
+    // initiate an asynchronous wikipedia API request
+    // and gets response in json format (updated upon udacity reviewer suggestion)
     $.ajax({
-      url: url,
-      data: {format: 'json'},
-      dataType: 'jsonp',
-      success: function (result) {
-        // initialize an array to push all the retreived articles
-        var wiki_articles = [];
-
+        // AJAX settings
+        url: url,
+        data: {format: 'json'},
+        dataType: 'jsonp'
+    }).done(function (result) {
+        // success
         // for each wikipedia article returned, create an html list item
         // having the article's title and refering to the article url
-        $.each( result.query.pages, function(flag, wiki_article) {
-          wiki_articles.push( '<li class="wiki-article"> <a class="link" href="' +
-            wiki_article.fullurl +'">'+ wiki_article.title +'</a></li>' );
+        $.each(result.query.pages, function(flag, wiki_article) {
+          wikiContent += '<li class="wiki-article"> <a class="link" href="' +
+            wiki_article.fullurl +'" target="_blank">'+ wiki_article.title +'</a></li><br>';
         });
 
-        // join all the list items in wiki_articles array and append them
-        // in the existing wiki ul html element
-        $(wiki_articles.join('<br>')).appendTo($('#wiki'));
+        wikiContent += '</ul></div>';
 
-        // make the dynamically created infowindow links clickable
-        $('.link').on('click', function(){
-          window.open(this.href, '_blank');
-        });
-
-        // clear the previously created timeout so as not to
-        // view the wikipedia connection error message
-        clearTimeout(wikiApiReqTimeout);
-      }
+        // adds street view to the infowindow
+        addStreetView(marker, markerInfoWindow, wikiContent);
+    }).fail(function (jqXHR, textStatus) {
+        // handles error
+        wikiContent += '<h4><a>Wikipedia articles about ' + marker.title.toUpperCase() +
+          ' could not be loaded!</a></h4></ul></div>';
+        addStreetView(marker, markerInfoWindow, wikiContent);
     });
   };
 
