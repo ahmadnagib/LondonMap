@@ -15,7 +15,7 @@
           <div class="col-1" >
             <!-- Show the list of places when navigation icon is clicked in mobile view -->
             <a id="icon" data-bind="click: showPlacesList">
-              <img src="img/nav_icon.png" alt="Navigation Menu Icon downloaded from https://icons8.com/icon/45663/pointer/">
+              <img src="img/nav_icon.png" alt="Navigation Menu Icon downloaded from https://icons8.com/icon/45663/pointer">
             </a>
           </div>
           <div class="col-11">
@@ -25,12 +25,12 @@
       <!-- A row containing both the places list and the map in case of desktop view -->
       <div class="row mainly">
         <!-- The places list -->
-        <nav id="places-list" class="col-6">
+        <nav id="places-list" data-bind="css: { 'open': visiblePlacesList }" class="col-6">
           <hr class="top-hr">
           <!-- Text input to filter the list of places -->
           <div>
             <h3> Filter places!</h3>
-            <input class="search" data-bind="textInput: filteringText, valueUpdate: 'keyup'" placeholder="Ex: Garden, Museum, etc." />
+            <input class="search" data-bind="textInput: filteringText, valueUpdate: 'keyup'" placeholder="Ex: Garden, Museum, etc." >
           </div>
 
           <hr class="buttom-hr">
@@ -56,7 +56,8 @@
     </div>
     <!-- Including the used JavaScript libraries and files -->
     <script src="js/lib/knockout-3.4.2.js"></script>
-    <script src="js/lib/jquery.min.js"></script>
+    <script src="js/lib/jquery-3.2.1.min.js"></script>
+    <script src="js/mapstyles.js"></script>
     <script src="js/model.js"></script>
     <script src="js/viewmodel.js"></script>
     <script src="js/mapview.js"></script>
