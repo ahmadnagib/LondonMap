@@ -85,6 +85,7 @@ var Place = function (place) {
 
   // the marker object created for each place in the list
   this.marker = new google.maps.Marker({
+    map: map,
     position: this.location,
     title: this.title,
     icon: defaultIcon,
