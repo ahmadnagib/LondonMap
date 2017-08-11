@@ -1,5 +1,4 @@
 var map;
-var vm;
 
 var mapView = function () {
   /*
