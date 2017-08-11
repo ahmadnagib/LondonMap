@@ -2,7 +2,7 @@
 
 LondonMap is a responsive web application that helps people discover places around [City, University of London](https://en.wikipedia.org/wiki/City,_University_of_London). A live version of the application can be found at [londonmap.tk](http://www.londonmap.tk)
 
-![screenshot](https://user-images.githubusercontent.com/13169976/29096432-3beb4610-7c95-11e7-8382-fbf32ee4e546.png)
+![screenshot](https://user-images.githubusercontent.com/13169976/29211228-19e4578c-7e98-11e7-964f-985264ee95e7.png)
 
 This project is part of Udacity's Full Stack Web Developer Nanodegree Program. Part of the code was inspired from my own implementation of udacity lessons and quizzes.
 
