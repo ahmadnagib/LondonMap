@@ -1,282 +1,70 @@
-* {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
-  font-family: "Lato", sans-serif;
-  color: #2d3c49;
-}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style/main.css">
+    <title>LondonMap</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+  </head>
+  <body>
 
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  background-color: #408080;
-}
+    <div class="grid">
+      <!-- The header containing the site title and the navigation icon -->
+      <header class="row">
+          <div class="col-1" >
+            <!-- Show the list of places when navigation icon is clicked in mobile view -->
+            <a id="icon" data-bind="click: showPlacesList">
+              <img src="img/nav_icon.png" alt="Navigation Menu Icon downloaded from https://icons8.com/icon/45663/pointer">
+            </a>
+          </div>
+          <div class="col-11">
+            <h2>LondonM<b>a</b>p</h2>
+          </div>
+      </header>
+      <!-- A row containing both the places list and the map in case of desktop view -->
+      <div class="row mainly">
+        <!-- The places list -->
+        <nav id="places-list" data-bind="css: { 'open': visiblePlacesList }" class="col-6">
+          <hr class="top-hr">
+          <!-- Text input to filter the list of places -->
+          <div>
+            <h3> Filter places!</h3>
+            <input class="search" data-bind="textInput: filteringText, valueUpdate: 'keyup'" placeholder="Ex: Garden, Museum, etc." >
+          </div>
 
-/* CSS Framework */
-.grid {
-  margin: 0 auto;
-  width: 100%;
-  height: 100%;
-  overflow-y: hidden;
-}
+          <hr class="buttom-hr">
 
-.row {
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: nowrap;
-  background-color: #408080;
-}
-
-.col-2 {
-  width: 16.66%;
-  flex-grow: 1;
-}
-
-.col-6 {
-  overflow-x: hidden;
-  overflow-y: scroll;
-  width: 65%;
-  flex-grow: 1;
-  line-height: 25px;
-  padding: 0px 10px 30px 10px;
-  text-align: left;
-  background-color: #408080;
-  max-height: calc(100% - 63.5px);
-}
-
-.col-9 {
-  width: 75%;
-  flex-grow: 1;
-  border: 1px solid #999;
-  border-radius: 3px;
-  overflow-y: hidden;
-  max-height: calc(100% - 63.5px);
-}
-
-.col-10 {
-  width: 84.44%;
-  flex-grow: 1;
-}
-
-.col-12 {
-  width: 100%;
-  flex-grow: 1;
-  background-color: #408080;
-}
-
-.mainly {
-  min-height: calc(100% - 63.5px);
-}
-
-input {
-  font-size: 0.75em;
-}
-
-.top-hr {
-  margin-top: 0em;
-  -webkit-margin-before: 0em;
-}
-
-.buttom-hr {
-  margin-top: 0.75em;
-  -webkit-margin-before: 0.75em;
-}
-
-b {
-  color: #f00000;
-}
-
-h2 {
-  /*color: #c0c0c0;*/
-  color: #ffffff;
-  font-size: 1.6em;
-  font-weight: 500;
-  text-align: center;
-  margin-top: 0.25em;
-  margin-bottom: 0em;
-  -webkit-margin-before: 0.25em;
-  -webkit-margin-after: 0em;
-}
-
-h3 {
-  color: #525454;
-  font-size: 1.4em;
-  font-weight: 600;
-  margin-top: 0.5em;
-  margin-bottom: 0.25em;
-  -webkit-margin-before: 0.5em;
-  -webkit-margin-after: 0.25em;
-}
-
-h4 {
-  color: #525454;
-  font-size: 1.4em;
-  font-weight: 600;
-  margin-top: 0.25em;
-  margin-bottom: 0.4em;
-  -webkit-margin-before: 0.25em;
-  -webkit-margin-after: 0.4em;
-}
-
-h4 a {
-  color: #0F5AF1;
-  font-size: 0.7em;
-  font-weight: 500;
-}
-
-#map-container {
-  height:100%;
-  width:100%;
-}
-
-.col-6 li:hover {
-  background-color: #fdab00;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0 auto;
-}
-
-li a, #map-message {
-  font-size: 0.8em;
-  font-weight: 700;
-}
-
-.wiki-article a {
-  font-size: 1em;
-  font-weight: 700;
-}
-
-a {
-  text-decoration: none;
-  display: block;
-}
-
-#map {
-  height: 100%;
-  bottom:0px;
-}
-
-#panorama {
-  width: 210px;
-  height: 125px;
-}
-
-#wiki {
-  line-height: 14px;
-  margin-left: 0;
-  width: 210px;
-  height: 100px;
-}
-
-.search {
-  width: 100%;
-}
-
-/* The places list is hidden in case of mobile view */
-nav {
-  height: 100%;
-  position: absolute;
-  -webkit-transform: translate(-500px, 0);
-  transform: translate(-500px, 0);
-  transition: transform 0.5s ease;
-  z-index: 1;
-}
-
-/* allows to view the places list when the navigation icon is clicked */
-nav.open {
-  -webkit-transform: translate(0, 0);
-  transform: translate(0, 0);
-}
-
-@media (min-width: 400px) {
-  .col-6 {
-    width: 41.66%;
-    overflow-y: hidden;
-  }
-}
-
-@media (min-width: 550px) {
-  li a, #map-message {
-    font-size: 1em;
-    font-weight: 700;
-  }
-}
-
-@media (min-width: 654px) {
-  #panorama {
-    width: 220px;
-    height: 130px;
-  }
-
-  #wiki {
-    width: 220px;
-    height: 100px;
-  }
-
-  li a, #map-message {
-    font-size: 1.1em;
-    font-weight: 600;
-    margin-top: 0.1em;
-    margin-bottom: 0.1em;
-    -webkit-margin-before: 0.1em;
-    -webkit-margin-after: 0.1em;
-  }
-
-  /* The places list is open by default in case of desktop view */
-  nav {
-    position:relative;
-    -webkit-transform: translate(0, 0);
-    transform: translate(0, 0);
-  }
-
-  input {
-  font-size: 1em;
-  }
-}
-
-@media (min-width: 826px) {
-  .col-6 {
-    width: 35%;
-  }
-
-  li a, #map-message {
-    font-size: 1.25em;
-    font-weight: 700;
-  }
-
-  h2 {
-    font-size: 2em;
-    font-weight: 600;
-  }
-
-  h3 {
-    font-size: 1.6em;
-    font-weight: 500;
-  }
-
-  .mainly {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-flow: row nowrap;
-    flex-flow: row nowrap;
-  }
-
-  main {
-    width: auto;
-    flex-grow: 1;
-  }
-}
-
-@media (min-width: 1005px) {
-  .col-6 {
-    width: 25%;
-  }
-}
+          <h3> Places: </h3>
+          <!-- The places list to be filled by up-to-date data from the viewmodel -->
+          <ul data-bind="foreach: placesKoList">
+              <li data-bind="visible: inList" >
+                  <!-- Bindings so that the markers behave the same when using the list view instead of the map -->
+                  <a href="" data-bind="text: title, event: { mouseover: highlightMarker, mouseout: defaultMarker, click: select}"></a>
+              </li>
+          </ul>
+        </nav>
+        <!-- Bindings to hide the list view when the map is clicked -->
+        <main class="col-9" data-bind="click: hidePlacesList">
+            <!-- The map -->
+            <div id="map" class="row">
+              <!-- A div for displaying error message in case of failing to connect to Google Maps APIs -->
+              <h2 id="map-message" class="col-12"></h2>
+            </div>
+        </main>
+      </div>
+    </div>
+    <!-- Including the used JavaScript libraries and files -->
+    <script src="js/lib/knockout-3.4.2.js"></script>
+    <script src="js/lib/jquery-3.2.1.min.js"></script>
+    <script src="js/mapstyles.js"></script>
+    <script src="js/mapview.js"></script>
+    <script src="js/model.js"></script>
+    <script src="js/viewmodel.js"></script>
+    <!-- Connecting to Google Maps API using the API key
+        including the needed libraries and handling the potential connection error -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB0bBQFHHrLE-dz6SsEJcwvSQVDx9Ygd5A&libraries=places,geometry&v=3&callback=mapView" onerror="handleMapError()">
+    </script>
+  </body>
+</html>
