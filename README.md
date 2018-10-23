@@ -1,6 +1,6 @@
 # LondonMap
 
-LondonMap is a responsive web application that helps people discover places around [City, University of London](https://en.wikipedia.org/wiki/City,_University_of_London). A live version of the application can be found at [londonmap.tk](http://www.londonmap.tk)
+LondonMap is a responsive web application that helps people discover places around [City, University of London](https://en.wikipedia.org/wiki/City,_University_of_London). A live version of the application can be found at [this link](http://research.cs.queensu.ca/~ahmad/londonmap/)
 
 ![screenshot](https://user-images.githubusercontent.com/13169976/29211228-19e4578c-7e98-11e7-964f-985264ee95e7.png)
 
